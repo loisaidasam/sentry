@@ -16,7 +16,7 @@ except ImportError:
 
 from sentry.web import api
 from sentry.web.frontend import (alerts, accounts, generic, groups, events,
-    projects, admin, docs, teams, users)
+    projects, admin, docs, teams, users, shortener)
 
 __all__ = ('urlpatterns',)
 
@@ -36,6 +36,11 @@ def init_all_applications():
 init_all_applications()
 
 urlpatterns = patterns('',
+
+    url(r'^s/shorten$', shortener.shorten, name='sentry-shorten'),
+    url(r'^s/(.+)$', shortener.short_link, name='sentry-short-link'),
+
+
     url(r'^_static/(?P<module>[^/]+)/(?P<path>.*)$', generic.static_media,
         name='sentry-media'),
 
